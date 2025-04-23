@@ -1,0 +1,54 @@
+                                                                            
+┌──(kali㉿kali)-[~]
+└─$ mkdir /zip-crack-demo
+mkdir: cannot create directory ‘/zip-crack-demo’: Permission denied
+                                                                             
+┌──(kali㉿kali)-[~]
+└─$ mkdir ~/zip-crack-demo
+                                                                             
+┌──(kali㉿kali)-[~]
+└─$ cd ~/zip-crack-demo
+                                                                             
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$ echo -e "Hello\nPratiksha" > abc.txt
+                                                                             
+                                                
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$ zip --password secret123 word.zip abc.txt  
+  adding: abc.txt (stored 0%)
+                                                                             
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$ zip2john word.zip > ziphash.txt
+
+Created directory: /home/kali/.john
+ver 1.0 efh 5455 efh 7875 word.zip/abc.txt PKZIP Encr: 2b chk, TS_chk, cmplen=28, decmplen=16, crc=4B24080E ts=1B2E cs=1b2e type=0
+                                                                             
+
+                                                                             
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$ sudo apt install wordlists
+[sudo] password for kali: 
+wordlists is already the newest version (2023.2.0).
+wordlists set to manually installed.
+Summary:
+  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 1060
+                                                                             
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$  sudo gzip -d /usr/share/wordlists/rockyou.txt.gz
+                                                                             
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$  john ziphash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (PKZIP [32/64])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+secret123        (word.zip/abc.txt)     
+1g 0:00:00:00 DONE (2025-04-23 03:30) 50.00g/s 1228Kp/s 1228Kc/s 1228KC/s christal..280789
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+                                                                             
+┌──(kali㉿kali)-[~/zip-crack-demo]
+└─$  john --show ziphash.txt
+word.zip/abc.txt:secret123:abc.txt:word.zip::word.zip
+
+1 password hash cracked, 0 left
